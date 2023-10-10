@@ -51,6 +51,17 @@ public class TicTacToe {
         else return false;
     }
 
+    public static char humanPiece(char symbol) {
+        if (symbol == 'y'){
+            System.out.println("Хорошо, тогда ходи!");
+            return X;
+        }
+        else {
+            System.out.println("Хорошо, я хожу первым!");
+            return O;
+        }
+    }
+
     public static void main(String[] args) {
 
     }
