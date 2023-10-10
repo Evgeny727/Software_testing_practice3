@@ -95,6 +95,10 @@ public class TicTacToe {
         return NO_ONE;
     }
 
+    public static boolean isLegal(int move, final ArrayList<Character> pBoard) {
+        return (pBoard.get(move) == EMPTY);
+    }
+
     public static void main(String[] args) {
 
     }
