@@ -2,6 +2,7 @@ package com.practice.testing;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class TicTacToe {
     static final char X = 'X';
@@ -10,7 +11,9 @@ public class TicTacToe {
     static final char TIE = 'T';
     static final char NO_ONE = 'N';
 
-    void insructions() {
+    static Scanner in = new Scanner(System.in);
+
+    static void instructions() {
         System.out.println("Добро пожалоать в игру 'крестики-нолики'");
         System.out.println("Чтобы сделать действие введите число от 0 до 8, которое обозначает клетку поля");
         System.out.println("    0 | 1 | 2");
@@ -22,12 +25,10 @@ public class TicTacToe {
 
     static char askYesNo(String question) {
         char response;
-        Scanner in = new Scanner(System.in);
         do {
             System.out.println(question + " (y/n): ");
             response = in.next().charAt(0);
         } while (askYesNoTest(response));
-        in.close();
         return response;
     }
 
@@ -38,12 +39,10 @@ public class TicTacToe {
 
     static int askNumber(String question, int high, int low) {
         int number;
-        Scanner in = new Scanner(System.in);
         do {
             System.out.println(question + " (" + low + " - " + high + "): ");
-            number = in.next().charAt(0);
+            number = in.nextInt();
         } while (askNumberTest(number, high, low));
-        in.close();
         return number;
     }
 
@@ -66,6 +65,14 @@ public class TicTacToe {
     public static char opponent(char piece) {
         if (piece == X) return O;
         else return X;
+    }
+
+    static void displayBoard(final ArrayList<Character> pBoard) {
+        System.out.println("\n\t" + pBoard.get(0) + " | " + pBoard.get(1) + " | " + pBoard.get(2));
+        System.out.println("\t" + "---------");
+        System.out.println("\t" + pBoard.get(3) + " | " + pBoard.get(4) + " | " + pBoard.get(5));
+        System.out.println("\t" + "---------");
+        System.out.println("\t" + pBoard.get(6) + " | " + pBoard.get(7) + " | " + pBoard.get(8) + "\n");
     }
 
     public static char winner(final ArrayList<Character> pBoard) {
@@ -168,8 +175,45 @@ public class TicTacToe {
         return move;
     }
 
-    public static void main(String[] args) {
+    static void announceWinner(char winner, char computer, char human) {
+        if (winner == computer || winner == human) {
+            System.out.println(winner + " победил!");
+        }
 
+        else {
+            System.out.println("Это ничья!");
+        }
+    }
+
+    public static void main(String[] args) {
+        int move;
+        final int NUM_SQUARES = 9;
+        ArrayList<Character> board = new ArrayList<>();
+        for (int i = 0; i < NUM_SQUARES; i++) {
+            board.add(EMPTY);
+        }
+
+        instructions();
+        char go_first = askYesNo("Хочешь ходить первым?");
+        char human = humanPiece(go_first);
+        char computer = opponent(human);
+        char turn = X;
+        displayBoard(board);
+
+        while (winner(board) == NO_ONE) {
+            if (turn == human) {
+                move = humanMove(board, human);
+                board.set(move, human);
+            }
+            else {
+                move = computerMove(board, computer);
+                board.set(move, computer);
+            }
+            displayBoard(board);
+            turn = opponent(turn);
+        }
+
+        announceWinner(winner(board), computer, human);
     }
 }
 
