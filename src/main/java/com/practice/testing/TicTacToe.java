@@ -35,6 +35,22 @@ public class TicTacToe {
         else return false;
     }
 
+    static int askNumber(String question, int high, int low) {
+        int number;
+        Scanner in = new Scanner(System.in);
+        do {
+            System.out.println(question + " (" + low + " - " + high + "): ");
+            number = in.next().charAt(0);
+        } while (askNumberTest(number, high, low));
+        in.close();
+        return number;
+    }
+
+    public static boolean askNumberTest(int input, int high, int low) {
+        if (input > high || input < low) return true;
+        else return false;
+    }
+
     public static void main(String[] args) {
 
     }
