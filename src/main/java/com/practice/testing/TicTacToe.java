@@ -1,5 +1,6 @@
 package com.practice.testing;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -35,6 +36,17 @@ public class TicTacToe {
         else return false;
     }
 
+    static int askNumber(String question, int high, int low) {
+        int number;
+        Scanner in = new Scanner(System.in);
+        do {
+            System.out.println(question + " (" + low + " - " + high + "): ");
+            number = in.next().charAt(0);
+        } while (askNumberTest(number, high, low));
+        in.close();
+        return number;
+    }
+
     public static boolean askNumberTest(int input, int high, int low) {
         if (input > high || input < low) return true;
         else return false;
@@ -54,6 +66,33 @@ public class TicTacToe {
     public static char opponent(char piece) {
         if (piece == X) return O;
         else return X;
+    }
+
+    public static char winner(final ArrayList<Character> pBoard) {
+        final int[][] WINNING_ROWS = {{0, 1, 2},
+                {3, 4, 5},
+                {6, 7, 8},
+                {0, 3, 6},
+                {1, 4, 7},
+                {2, 5, 8},
+                {0, 4, 8},
+                {2, 4, 6}};
+        final int TOTAL_ROWS = 8;
+
+        for (int row = 0; row < TOTAL_ROWS; row++) {//если в какой-то строке есть 3 одинаковые не пустые значения -> есть победитель
+            if ((pBoard.get(WINNING_ROWS[row][0]) != EMPTY) &&
+                    (pBoard.get(WINNING_ROWS[row][0]) == pBoard.get(WINNING_ROWS[row][1])) &&
+                    (pBoard.get(WINNING_ROWS[row][1]) == pBoard.get(WINNING_ROWS[row][2]))) {
+                return pBoard.get(WINNING_ROWS[row][0]);
+            }
+        }
+        //проверка на ничью
+        if (!pBoard.contains(EMPTY)) {
+            return TIE;
+        }
+
+        //никто не победил
+        return NO_ONE;
     }
 
     public static void main(String[] args) {
