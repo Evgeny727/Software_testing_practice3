@@ -110,7 +110,63 @@ public class TicTacToe {
         return move;
     }
 
+    public static int computerMove(ArrayList<Character> board, char computer) {
+        int move = 0;
+        boolean found = false;
 
+        //если компьютер может выиграть следующим ходом, сделать этот ход
+        while (!found && move < board.size()) {
+            if (isLegal(move, board)) {
+                //попробовать сходить
+                board.set(move, computer);
+                //проверить на победу
+                found = winner(board) == computer;
+                //отменить ход
+                board.set(move, EMPTY);
+            }
+            if (!found) {
+                ++move;
+            }
+        }
+
+        //если же пользователь может выиграть следующим ходом, сделать этот ход
+        if (!found) {
+            move = 0;
+            char human = opponent(computer);
+            while (!found && move < board.size()) {
+                if (isLegal(move, board)) {
+                    //попробовать сходить
+                    board.set(move, human);
+                    //проверить на победу
+                    found = winner(board) == human;
+                    //отменить ход
+                    board.set(move, EMPTY);
+                }
+                if (!found) {
+                    ++move;
+                }
+            }
+        }
+
+        //иначе сделать наилучший ход
+        if (!found) {
+            move = 0;
+            int i = 0;
+
+            final int[] BEST_MOVES = { 4, 0, 2, 6, 8, 1, 3, 5, 7 };
+            //выбрать лучшую пустую клетку
+            while (!found && i <  board.size()) {
+                move = BEST_MOVES[i];
+                if (isLegal(move, board)){
+                    found = true;
+                }
+                ++i;
+            }
+        }
+
+        System.out.println("Я сделаю ход в клетку " + move);
+        return move;
+    }
 
     public static void main(String[] args) {
 
