@@ -99,6 +99,19 @@ public class TicTacToe {
         return (pBoard.get(move) == EMPTY);
     }
 
+    public static int humanMove(final ArrayList<Character> pBoard, char human) {
+        int move = askNumber("Куды ты будешь ходить?", (pBoard.size() - 1), 0);
+        while (!isLegal(move, pBoard))
+        {
+            System.out.println("\nЭта клетка уже занята!.");
+            move = askNumber("Куды ты будешь ходить?", (pBoard.size() - 1), 0);
+        }
+        System.out.println("Хорошо...");
+        return move;
+    }
+
+
+
     public static void main(String[] args) {
 
     }

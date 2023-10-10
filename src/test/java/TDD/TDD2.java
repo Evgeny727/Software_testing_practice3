@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class TDD2 {
     @Test
-    public void testing_winner_function_have_winner() {
+    public void testing_legal_move_function_legal() {
         ArrayList<Character> arrayList = new ArrayList<>();
         arrayList.add('X');
         arrayList.add('O');
@@ -22,7 +22,7 @@ public class TDD2 {
         Assertions.assertTrue(TicTacToe.isLegal(4, arrayList));
     }
     @Test
-    public void testing_winner_function_no_one() {
+    public void testing_legal_move_function_illegal() {
         ArrayList<Character> arrayList = new ArrayList<>();
         arrayList.add('X');
         arrayList.add('O');
